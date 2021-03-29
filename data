@@ -32,3 +32,5 @@ for i in range (len(table)):
 
 df = pd.DataFrame(players, columns = column_names_clean).set_index('Player')
 df
+
+df.to_csv ('2021_nba_data_per_game.csv', header=True)
