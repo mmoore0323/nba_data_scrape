@@ -10,21 +10,40 @@ covid2019_months=['october 2019','november','december','january','february','mar
 covid2020_months= ['december','january','february','march','april','may','june','july'] 
 
 url_start ='https://www.basketball-reference.com/leagues/NBA_{}_games-{}.html'
+covid2019_url_start ='https://www.basketball-reference.com/leagues/NBA_{}_games-{}-{}.html'
 
 #Loops through the years variable and months variable opens the weblink and writes to an html file.
+#Where I am finding trouble in this. If you look at the webpage for 2019-2020 season you will see what I am talking about. the URL has 2 diffferent year values in it.
 
 for year in years:
-    for month in months:
-        url = url_start.format(year,month)
+    
+    if years==2020:
+        
+        for month in covid2019_months:
+            
+            if covid2019_months=='october 2019' or covid2019_months=='october 2020':
+                
+                url = covid2019_url_start.format(year,month,year)
+                
+            else:
+                url=url_start.format(year,month)
+                
+            data = requests.get(url)
+            with open("scheduleandresults/{} {} {}.html".format(year,month,year), "w+",encoding="utf-8") as f:
+                f.write(data.text)
+            
+    elif years==2021:
+        for month in covid2020_months:
+            url= url_start.format(year,month)
+    else:
+        for month in normal_months:
+            url = url_start.format(year,month)
     
     
-        data = requests.get(url)
+            data = requests.get(url)
     
-        with open("scheduleandresults/{} {}.html".format(year,month), "w+",encoding="utf-8") as f:
-            f.write(data.text)
-from bs4 import BeautifulSoup
-import pandas as pd
-
+            with open("scheduleandresults/{} {}.html".format(year,month), "w+",encoding="utf-8") as f:
+                f.write(data.text)
 
 
 #Actually extracts the data from the html files. Using the HTML ID. Loops through for all years.
