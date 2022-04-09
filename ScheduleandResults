@@ -20,17 +20,25 @@ for year in years:
     if years==2020:
         
         for month in covid2019_months:
-            
-            if covid2019_months=='october 2019' or covid2019_months=='october 2020':
-                
+        
+            if month=='october 2019':
+                url = covid2019_url_start.format(year,month,year-1)
+                data = requests.get(url)
+                with open("scheduleandresults/{} {} {}.html".format(year,month,year-1), "w+",encoding="utf-8") as f:
+                     f.write(data.text)
+                    
+            elif month=='october 2020':
                 url = covid2019_url_start.format(year,month,year)
+                data = requests.get(url)
+                with open("scheduleandresults/{} {} {}.html".format(year,month,year), "w+",encoding="utf-8") as f:
+                     f.write(data.text)
                 
             else:
                 url=url_start.format(year,month)
                 
-            data = requests.get(url)
-            with open("scheduleandresults/{} {} {}.html".format(year,month,year), "w+",encoding="utf-8") as f:
-                f.write(data.text)
+                data = requests.get(url)
+                with open("scheduleandresults/{} {}.html".format(year,month,year), "w+",encoding="utf-8") as f:
+                    f.write(data.text)
             
     elif years==2021:
         for month in covid2020_months:
@@ -44,7 +52,6 @@ for year in years:
     
             with open("scheduleandresults/{} {}.html".format(year,month), "w+",encoding="utf-8") as f:
                 f.write(data.text)
-
 
 #Actually extracts the data from the html files. Using the HTML ID. Loops through for all years.
 dfs = []
