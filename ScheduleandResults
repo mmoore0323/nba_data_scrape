@@ -4,7 +4,11 @@ import codecs
 import shutil
 import requests
 years = list(range(2016,2022))
+
 months = ['october','november','december','january','february','march','april']
+covid2019_months=['october 2019','november','december','january','february','march','july','august','september','october 2020']
+covid2020_months= ['december','january','february','march','april','may','june','july'] 
+
 url_start ='https://www.basketball-reference.com/leagues/NBA_{}_games-{}.html'
 
 #Loops through the years variable and months variable opens the weblink and writes to an html file.
