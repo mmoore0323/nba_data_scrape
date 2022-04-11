@@ -1,0 +1,59 @@
+import sys
+import codecs
+import os
+import codecs
+import shutil
+import requests
+
+years = list(range(2016,2022))
+
+url_start = "https://www.basketball-reference.com/leagues/NBA_{}_advanced.html"
+
+for year in years:
+    url = url_start.format(year)
+    
+    data = requests.get(url)
+    
+    with open("playeradvancedstats/{}.html".format(year), "w+",encoding="utf-8") as f:
+        f.write(data.text)
+        
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time        
+
+driver = webdriver.Chrome(executable_path=r'\Users\matth\NBASCRAPE\chromedriver.exe')
+
+for year in years:
+    url = url_start.format(year)
+    
+    driver.get(url)
+    driver.execute_script("window.scrollTo(1,10000)")
+    time.sleep(2)
+    
+    with open("playeradvancedstats/{}.html".format(year), "w+",encoding="utf-8") as f:
+        f.write(driver.page_source)
+        
+from bs4 import BeautifulSoup
+import pandas as pd
+
+dfs = []
+for year in years:
+    with open(playeradvancedstats/{}.html".format(year), encoding= "utf-8") as f:
+        page = f.read()
+        
+    soup = BeautifulSoup(page, 'html.parser')
+    
+    tHeads=soup.findAll('tr',class_="thead")
+    
+    
+    for tHead in tHeads:
+                        
+        tHead.decompose()
+        
+    playeradvancedstats_data_table = soup.find_all(id="per_poss_stats")[0]
+    playeradvancedstats_df = pd.read_html(str( playeradvancedstats_data_table))[0]
+    playeradvancedstats_df["Year"] = year
+    
+    
+    
+    dfs.append(playerper100stats_df)
