@@ -57,25 +57,83 @@ for year in years:
 dfs = []
 for year in years:
     
-    for month in months:
-        
-        
-        with open("scheduleandresults/{} {}.html".format(year,month), encoding= "utf-8") as f:
-            
-            page = f.read()
+    if year==2020:
     
-        soup = BeautifulSoup(page, 'html.parser')
-        scheduleandresults_data_table = soup.find_all(id="schedule")[0]
-        scheduleandresults_df = pd.read_html(str( scheduleandresults_data_table))[0]
+        for month in covid2019_months:
+            if month=='october-2019':
+                with open("scheduleandresults/{} {}.html".format(year,month,year-1), encoding= "utf-8") as f:
+                    page = f.read()
+    
+                soup = BeautifulSoup(page, 'html.parser')
+                scheduleandresults_data_table = soup.find_all(id="schedule")[0]
+                scheduleandresults_df = pd.read_html(str( scheduleandresults_data_table))[0]
          
             
-        scheduleandresults_df["Year"] = year
-        scheduleandresults_df["Month"] = month
-    
+                scheduleandresults_df["Year"] = year
+                scheduleandresults_df["Month"] = month
+                
+                dfs.append(scheduleandresults_df)
+            
+            elif month=='october-2020':
+                with open("scheduleandresults/{} {}.html".format(year,month,year), encoding= "utf-8") as f:
+                    page = f.read()
+                
+                soup = BeautifulSoup(page, 'html.parser')
+                scheduleandresults_data_table = soup.find_all(id="schedule")[0]
+                scheduleandresults_df = pd.read_html(str( scheduleandresults_data_table))[0]
+         
+            
+                scheduleandresults_df["Year"] = year
+                scheduleandresults_df["Month"] = month
+                
+                dfs.append(scheduleandresults_df)
+            else:
+                with open("scheduleandresults/{} {}.html".format(year,month), encoding= "utf-8") as f:
+                    page = f.read()
+                
+                soup = BeautifulSoup(page, 'html.parser')
+                scheduleandresults_data_table = soup.find_all(id="schedule")[0]
+                scheduleandresults_df = pd.read_html(str( scheduleandresults_data_table))[0]
+         
+            
+                scheduleandresults_df["Year"] = year
+                scheduleandresults_df["Month"] = month
+                
+                dfs.append(scheduleandresults_df)
+        
+    elif year==2021:
+        for month in covid2020_months:
+            with open("scheduleandresults/{} {}.html".format(year,month), encoding= "utf-8") as f:
+                page = f.read()
+            soup = BeautifulSoup(page, 'html.parser')
+            scheduleandresults_data_table = soup.find_all(id="schedule")[0]
+            scheduleandresults_df = pd.read_html(str( scheduleandresults_data_table))[0]
+         
+            
+            scheduleandresults_df["Year"] = year
+            scheduleandresults_df["Month"] = month
+                
+            dfs.append(scheduleandresults_df)
+        
+    else:
+        for month in normal_months:
+            with open("scheduleandresults/{} {}.html".format(year,month), encoding= "utf-8") as f:
+                page = f.read()
+                
+            soup = BeautifulSoup(page, 'html.parser')
+            scheduleandresults_data_table = soup.find_all(id="schedule")[0]
+            scheduleandresults_df = pd.read_html(str( scheduleandresults_data_table))[0]
+         
+            
+            scheduleandresults_df["Year"] = year
+            scheduleandresults_df["Month"] = month
+                
+            dfs.append(scheduleandresults_df)
 
-    
-    
-    
-        dfs.append(scheduleandresults_df)
+        
 
 scheduleandresults_df=pd.concat(dfs)
+
+scheduleandresults_df=pd.concat(dfs)
+
+
